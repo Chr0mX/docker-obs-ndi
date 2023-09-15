@@ -30,22 +30,15 @@ RUN \
         && ln -s /usr/bin/python3 /usr/bin/python \
         && mkdir -p /config/obs-studio /root/.config/
 RUN \
-# Breaks container startup, moved to a startup script.
-#       && ln -s /config/obs-studio/ /root/.config/obs-studio \
         apt install -y obs-studio \
-# Not relevant for 22.04
-#       && echo "**** add Intel repo ****" \
-#       && curl -sL https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - \
-#       && echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu jammy main' > /etc/apt/sources.list.d/intel.list \
-        && echo "**** install runtime packages ****" \
         && apt-get update \
         && apt-get clean -y \
         && apt-get dist-upgrade -y
 RUN \
-        wget -q -O /opt/container_startup.sh https://raw.githubusercontent.com/mountaintopsolutions/docker-obs-ndi-ng/legacy/container_startup.sh \
-        && wget -q -O /opt/x11vnc_entrypoint.sh https://raw.githubusercontent.com/mountaintopsolutions/docker-obs-ndi-ng/legacy/x11vnc_entrypoint.sh \
+        wget -q -O /opt/container_startup.sh https://github.com/Chr0mX/docker-obs-ndi/raw/master/container_startup.sh \
+        && wget -q -O /opt/x11vnc_entrypoint.sh https://github.com/Chr0mX/docker-obs-ndi/raw/master/x11vnc_entrypoint.sh \
         && mkdir -p /opt/startup_scripts \
-        && wget -q -O /opt/startup_scripts/startup.sh https://raw.githubusercontent.com/mountaintopsolutions/docker-obs-ndi-ng/legacy/startup_scripts/startup.sh \
+        && wget -q -O /opt/startup_scripts/startup.sh https://github.com/Chr0mX/docker-obs-ndi/raw/master/startup_scripts/startup.sh \
         && wget -q -O /tmp/libndi5_5.5.3-1_amd64.deb https://github.com/obs-ndi/obs-ndi/releases/download/4.11.1/libndi5_5.5.3-1_amd64.deb \
         && wget -q -O /tmp/obs-ndi-4.11.1-linux-x86_64.deb https://github.com/obs-ndi/obs-ndi/releases/download/4.11.1/obs-ndi-4.11.1-linux-x86_64.deb \
 # Download and install the plugins for NDI
